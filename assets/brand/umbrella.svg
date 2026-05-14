@@ -1,0 +1,114 @@
+<!--
+  huasan brand mark — umbrella (画伞)
+  ───────────────────────────────────────────────────────────────────
+  Stable brand symbol. Use this as the visual anchor for any huasanai/*
+  repo logo. Shape is fixed; colors and background are meant to be remixed.
+
+  COLOR PALETTE (search-and-replace to recolor):
+    #00ff41   primary stroke (matrix green)
+    #5dd4f5   secondary / gradient end / rib accent (cyan)
+
+  GRADIENTS:
+    titleGrad   linear, primary → secondary (horizontal)
+
+  TO REUSE:
+    1. Copy this file to <your-project>/assets/brand/umbrella.svg
+    2. (Optional) Adjust the two colors above for a different palette:
+        - Warm:    #ff9f29  +  #ffd166
+        - Indigo:  #818cf8  +  #c4b5fd
+        - Mono:    #ffffff  +  #aaaaaa  (then run on a light background)
+    3. Embed in a bigger logo by either:
+       a. Reference: <img src="./umbrella.svg" width="250">
+       b. Inline: copy the <svg>...</svg> into your composite logo,
+          rewrite x/y coordinates by adding offsets
+
+  CANVAS:
+    viewBox = "0 0 250 220"   (standalone — no background)
+    Background is transparent. Wrap in a <rect fill="..."> in the host
+    logo if a dark backdrop is needed.
+
+  GEOMETRY ANCHORS (for embedding into a bigger composition):
+    Canopy:   M 10 114 → Q 240 114                            (width 230)
+    Tip:      (125, 14)                                       (highest point)
+    Handle end: (100, 206)                                    (lowest left)
+    Symbol center: (125, 110)                                 (roughly)
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 220" role="img"
+     aria-label="huasan brand mark — umbrella (画伞)">
+  <title>huasan umbrella</title>
+  <desc>The huasan brand mark: a minimalist umbrella drawn in one continuous stroke, echoing the name 画伞 (drawn umbrella). Canopy + underside arc + shaft + left-curved handle + 5 radial ribs + tip dot.</desc>
+
+  <defs>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#00ff41"/>
+      <stop offset="55%"  stop-color="#00ff41"/>
+      <stop offset="100%" stop-color="#5dd4f5"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="strongGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <style><![CDATA[
+      @keyframes drawStroke { 0%{stroke-dashoffset:var(--len);} 100%{stroke-dashoffset:0;} }
+      @keyframes fadeIn  { 0%{opacity:0;} 100%{opacity:1;} }
+      @keyframes floatY  { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);} }
+
+      /* Phase 1-4: drawn stroke-by-stroke (echoes "画" = drawn) */
+      .umb-canopy    { --len: 400; stroke-dasharray: 400; animation: drawStroke 1.0s cubic-bezier(0.4,0,0.2,1) 0.3s backwards; }
+      .umb-shaft     { --len: 90;  stroke-dasharray: 90;  animation: drawStroke 0.5s cubic-bezier(0.4,0,0.2,1) 1.0s backwards; }
+      .umb-handle    { --len: 50;  stroke-dasharray: 50;  animation: drawStroke 0.35s cubic-bezier(0.4,0,0.2,1) 1.4s backwards; }
+      .umb-tip       { animation: fadeIn 0.4s ease 1.50s backwards; }
+      .umb-rib-1     { animation: fadeIn 0.3s ease 1.55s backwards; }
+      .umb-rib-2     { animation: fadeIn 0.3s ease 1.60s backwards; }
+      .umb-rib-3     { animation: fadeIn 0.3s ease 1.65s backwards; }
+      .umb-rib-4     { animation: fadeIn 0.3s ease 1.70s backwards; }
+      .umb-rib-5     { animation: fadeIn 0.3s ease 1.75s backwards; }
+
+      .umb-group     { animation: floatY 6s ease-in-out 2.5s infinite; transform-origin: center; }
+    ]]></style>
+  </defs>
+
+  <!-- ===== Umbrella geometry ===== -->
+  <g class="umb-group" filter="url(#softGlow)">
+    <!-- Canopy: a single sweeping arc with subtle scallops -->
+    <path class="umb-canopy"
+          d="M 10 114 Q 40 44, 90 24 Q 125 14, 160 24 Q 210 44, 240 114"
+          fill="none" stroke="url(#titleGrad)" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Canopy underside arc (gives volume) -->
+    <path class="umb-canopy"
+          d="M 10 114 Q 125 89, 240 114"
+          fill="none" stroke="#00ff41" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+
+    <!-- Shaft - from canopy underside down to handle -->
+    <line class="umb-shaft" x1="125" y1="92" x2="125" y2="182"
+          stroke="url(#titleGrad)" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Handle (J curve, mirrored to the LEFT) -->
+    <path class="umb-handle"
+          d="M 125 182 Q 125 206, 100 206"
+          fill="none" stroke="url(#titleGrad)" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Ribs (radial supports). rib-3 extends to handle base for visual continuity -->
+    <line class="umb-rib-1" x1="125" y1="19" x2="28"  y2="112"
+          stroke="#5dd4f5" stroke-width="1" opacity="0.45" stroke-linecap="round"/>
+    <line class="umb-rib-2" x1="125" y1="19" x2="73"  y2="104"
+          stroke="#5dd4f5" stroke-width="1" opacity="0.45" stroke-linecap="round"/>
+    <line class="umb-rib-3" x1="125" y1="19" x2="125" y2="182"
+          stroke="#5dd4f5" stroke-width="1" opacity="0.45" stroke-linecap="round"/>
+    <line class="umb-rib-4" x1="125" y1="19" x2="177" y2="104"
+          stroke="#5dd4f5" stroke-width="1" opacity="0.45" stroke-linecap="round"/>
+    <line class="umb-rib-5" x1="125" y1="19" x2="222" y2="112"
+          stroke="#5dd4f5" stroke-width="1" opacity="0.45" stroke-linecap="round"/>
+
+    <!-- Tip (small glowing accent at top) -->
+    <circle class="umb-tip" cx="125" cy="14" r="3.5" fill="#00ff41" filter="url(#strongGlow)"/>
+  </g>
+</svg>
