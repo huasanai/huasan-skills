@@ -1,0 +1,10 @@
+# OS / Editor
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Local-only (private full version with author's personal references)
+*.local.md
+**/*.local.md
